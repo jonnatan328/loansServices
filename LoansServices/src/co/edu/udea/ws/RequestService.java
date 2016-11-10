@@ -25,8 +25,6 @@ import co.edu.udea.dto.Request;
 import co.edu.udea.exception.MyDaoException;
 import co.edu.udea.ws.dto.RequestWs;
 
-
-
 /**
  * Clase que respondera las peticiones web para los metodos de request
  * @author Oscar Zapata, Jonnatan R�os, Diego �lvarez

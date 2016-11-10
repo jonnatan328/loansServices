@@ -21,8 +21,6 @@ import co.edu.udea.dto.Request;
 import co.edu.udea.exception.MyDaoException;
 import co.edu.udea.ws.dto.RequestWs;
 
-
-
 /**
  * Clase que respondera las peticiones web para los metodos de request
  * @author Oscar Zapata, Jonnatan R�os, Diego �lvarez
@@ -54,6 +52,7 @@ public class RequestService {
 		return "se ha creado la solicitud de prestamo con id" + id;
 	}
 	*/
+	
 	/**
 	 * Metodo obtener los requests 
 	 * @return List<RequestWs>

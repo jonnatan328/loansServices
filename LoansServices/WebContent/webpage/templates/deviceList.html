@@ -1,0 +1,18 @@
+<div class="medium-center">
+	<table class="table-fill">
+		<thead>
+			<tr>
+				<th class="text-left" ng-click="sortBy('id')">Id</th>
+				<th class="text-left" ng-click="sortBy('name')">Nombre</th>
+				<th class="text-left" ng-click="sortBy('number')">Cantidad</th>
+			</tr>
+		</thead>
+		<tbody class="table-hover">
+			<tr ng-repeat="device in devices" ng-click="requestDevice(device.id, device.name)">
+				<td class="text-left">{{device.id}}</td>
+				<td class="text-left">{{device.name}}</td>
+				<td class="text-left">{{device.number}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

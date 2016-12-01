@@ -23,4 +23,8 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath:configuration.xml</param-value>
   </context-param>
+  
+  <welcome-file-list>
+  	<welcome-file>webpage/index.html</welcome-file>
+  </welcome-file-list>
 </web-app>

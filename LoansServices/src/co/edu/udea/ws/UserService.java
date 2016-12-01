@@ -10,11 +10,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import co.edu.udea.bl.UserBL;
+import co.edu.udea.dto.User;
 import co.edu.udea.exception.MyDaoException;
+import co.edu.udea.ws.dto.UserWs;
 
 /**
  * Clase que respondera las peticiones web para los metodos de user
@@ -32,7 +37,7 @@ public class UserService {
 	 * @param username del usuario
 	 * @param names o nombres del usuario
 	 * @param lastnames o apellidos del usuario
-	 * @param password o contraseña del usuario
+	 * @param password o contraseï¿½a del usuario
 	 * @param role o rol del usuario
 	 */
 	@POST
@@ -51,20 +56,50 @@ public class UserService {
 	/**
 	 * Metodo para logear un usuario
 	 * @param usuario del usuario
-	 * @param password o contraseña del usuario
+	 * @param password o contraseï¿½a del usuario
 	 */
-	@GET
-	@Produces(MediaType.TEXT_HTML)
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
 	@Path("login")
-	public String login(@QueryParam("usuario") String usuario, @QueryParam("password") String password) throws RemoteException{
+	public Object login(@QueryParam("usuario") String usuario, @QueryParam("password") String password) throws RemoteException{
+		JSONObject response = null;
 		try{
 			if(userBL.signIn(usuario, password)){
-				return "Autenticación exitosa!";
+				//return "Autenticaciï¿½n exitosa!";
+				response = new JSONObject();
+				response.put("authenticated", true);				
+				return response;
 			}else{
-				return "Autenticación erronea!";
-			}
+				//return "Autenticaciï¿½n erronea!";
+				response = new JSONObject();
+				response.put("authenticated", false);				
+				return response;			}
+		}catch(MyDaoException | JSONException e){
+			throw new RemoteException(e.getMessage(), e);
+		}
+	}
+	
+	/**
+	 * Metodo para obtener un usuario
+	 * @param usuario del usuario
+	 */
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("user")
+	public UserWs getUser(@QueryParam("usuario") String usuario) throws RemoteException{
+		UserWs userWs = null;
+
+		try{
+			User user = userBL.getUser(usuario);
+			userWs = new UserWs();
+			userWs.setUsername(user.getUsername());
+			userWs.setNames(user.getNames());
+			userWs.setLastnames(user.getLastnames());
+			userWs.setRole(user.getRole());			
+			
 		}catch(MyDaoException e){
 			throw new RemoteException(e.getMessage(), e);
 		}
+		return userWs;
 	}
 }

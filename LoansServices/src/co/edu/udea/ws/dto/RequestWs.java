@@ -10,6 +10,7 @@ import co.edu.udea.dto.User;
 
 @XmlRootElement
 public class RequestWs {
+	private long id;
 	private Date dateRequest;
 	private Calendar startTime;
 	private Calendar endTime;
@@ -24,7 +25,7 @@ public class RequestWs {
 	 * @param device
 	 * @param researcher
 	 */
-	public RequestWs(Date dateRequest, Calendar startTime, Calendar endTime, Device device, User researcher) {
+	public RequestWs( Date dateRequest, Calendar startTime, Calendar endTime, Device device, User researcher) {
 		super();
 		this.dateRequest = dateRequest;
 		this.startTime = startTime;
@@ -39,7 +40,20 @@ public class RequestWs {
 	public RequestWs() {
 		super();
 	}
-
+	
+	/**
+	 * Obtiene la fecha de solicitud de un Request
+	 * @return dateRequest
+	 */
+	public long getId() {
+		return id;
+	}
+	/**
+	 * Modifica la fecha de solicitud de un Request
+	 */
+	public void setId(long id) {
+		this.id = id;
+	}
 	/**
 	 * Obtiene la fecha de solicitud de un Request
 	 * @return dateRequest

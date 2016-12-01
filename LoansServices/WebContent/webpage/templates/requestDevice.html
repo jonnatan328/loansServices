@@ -1,0 +1,16 @@
+<div class="medium-center">
+	<form ng-submit="makeRequest()">
+		<input type="text" value="{{device.name | uppercase}} solicitud de pŕestamo" class="first-input" disabled>
+		<div class="bar"><i></i></div>
+		<input type="text" placeholder="Fecha de pedido: YYYY-MM-DD" ng-model="dateRequest" 
+		pattern="\d{4}-\d{1,2}-\d{1,2}" required>
+		<div class="bar"><i></i></div>
+		<input type="text" placeholder="Hora de inicio: HH:MM:SS" ng-model="startTime" 
+		 pattern="(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2}" required>
+				<div class="bar"><i></i></div>
+		<input type="text" placeholder="Hora final: HH:MM:SS" ng-model="endTime" 
+		pattern="(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2}" class="last-input"required>
+		<br>
+		<button>Solicitar préstamo</button>
+	</form>
+</div>

@@ -1,0 +1,27 @@
+<div class="small-center">
+	<table class="table-fill">
+		<thead>
+			<tr>
+				<th class="text-left" ng-click="sortBy('id')">Dispositivo</th>
+				<th class="text-left" ng-click="sortBy('id')">Investigador</th>
+				<th class="text-left" ng-click="sortBy('name')">Fecha prestamo</th>
+				<th class="text-left" ng-click="sortBy('number')">Hora inicio</th>
+				<th class="text-left" ng-click="sortBy('number')">Hora final</th>
+				<th class="text-left" ng-click="sortBy('number')">Aceptar/rechazar</th>
+				
+				
+			</tr>
+		</thead>
+		<tbody class="table-hover">
+			<tr ng-repeat="request in requests">
+				<td class="text-left">{{request.device.name}}</td>
+				<td class="text-left">{{request.researcher.names}} {{request.researcher.lastnames}}</td>
+				<td class="text-left">{{request.dateRequest | date}}</td>
+				<td class="text-left">{{request.startTime | timeStr}}</td>
+				<td class="text-left">{{request.endTime | timeStr}}</td>
+				<td><button ng-click="acceptRequest(request.id, $index)">✓</button>
+				<button ng-click="rejectRequest(request.id, $index)">X</button></td>
+			</tr>
+		</tbody>
+	</table>
+</div>

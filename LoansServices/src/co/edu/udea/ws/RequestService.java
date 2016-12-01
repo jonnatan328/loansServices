@@ -17,6 +17,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -68,8 +70,9 @@ public class RequestService {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("new/{dateRequest}/{startTime}/{endTime}/{state}/{device}/{researcher}")
-	public String create(@PathParam("dateRequest") String dateRequest, @PathParam("startTime") String startTim, @PathParam("endTime") String endTim, 
+	public Object create(@PathParam("dateRequest") String dateRequest, @PathParam("startTime") String startTim, @PathParam("endTime") String endTim, 
 						@PathParam("state") String state, @PathParam("device") Long device, @PathParam("researcher") String researcher) throws RemoteException, ParseException {
+		JSONObject response = null;
 		Long id = null;
 		DateFormat df = new SimpleDateFormat("yyyy-mm-dd"); 
 		Date dateReq = df.parse(dateRequest);
@@ -83,10 +86,13 @@ public class RequestService {
 		endTime.set(Calendar.MINUTE, Integer.parseInt(timeEn[1]));
 		try{
 			id = requestBL.createRequest(dateReq, startTime, endTime, state, device, researcher);
-		}catch(MyDaoException e){
+			response = new JSONObject();
+			response.put("created", true);
+		}catch(MyDaoException | JSONException e){
 			throw new RemoteException(e.getMessage(), e);
 		}
-		return ("se ha creado la solicitud de prestamo con id" + id);
+
+		return response;
 	}
 	
 
@@ -191,6 +197,7 @@ public class RequestService {
 			datos = requestBL.searchRequest(state);
 			for(Request request: datos){
 				RequestWs requestWs = new RequestWs(request.getDateRequest(), request.getStartTime(), request.getEndTime(), request.getDevice(), request.getResearcher());
+				requestWs.setId(request.getId());
 				resultado.add(requestWs);
 			}
 		}catch(MyDaoException e){
